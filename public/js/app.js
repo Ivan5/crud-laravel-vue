@@ -1736,7 +1736,107 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      tareas: [],
+      tarea: {
+        nombe: "",
+        descripcion: ""
+      },
+      editarActivo: false
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get("/notas").then(function (res) {
+      _this.tareas = res.data;
+    });
+  },
+  methods: {
+    agregar: function agregar() {
+      var _this2 = this;
+
+      if (this.tarea.nombre.trim() === "" || this.tarea.descripcion.trim() === "") {
+        alert("Debes completar todos los campos antes de guardar");
+        return;
+      }
+
+      var params = {
+        nombre: this.tarea.nombre,
+        descripcion: this.tarea.descripcion
+      };
+      this.tarea.nombre = "";
+      this.tarea.descripcion = "";
+      axios.post("/notas", params).then(function (res) {
+        _this2.tareas.push(res.data);
+      });
+    },
+    eliminarNota: function eliminarNota(item, index) {
+      var _this3 = this;
+
+      axios["delete"]("/notas/".concat(item.id)).then(function () {
+        _this3.tareas.splice(index, 1);
+      });
+    },
+    editarFormulario: function editarFormulario(item) {
+      this.editarActivo = true;
+      this.tarea.nombre = item.nombre;
+      this.tarea.descripcion = item.descripcion;
+      this.tare.id = item.id;
+    }
+  },
+  editarNota: function editarNota(item) {
+    var _this4 = this;
+
+    var params = {
+      nombre: item.nombre,
+      descripcion: item.descripcion
+    };
+    axios.update("/notas/".concat(item.id), params).then(function (res) {
+      var index = _this4.tareas.findIndex(function (notaBuscar) {
+        return notaBuscar.id === res.data.id;
+      });
+
+      _this4.tareas[index] = res.data;
+    });
+  }
+});
 
 /***/ }),
 
@@ -37076,16 +37176,186 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _vm.editarActivo
+      ? _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.editarNota(_vm.nota)
+              }
+            }
+          },
+          [
+            _c("h3", [_vm._v("Editar Tareas")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.tarea.nombre,
+                  expression: "tarea.nombre"
+                }
+              ],
+              staticClass: "form-control mb-2",
+              attrs: { type: "text", placeholder: "Nombre" },
+              domProps: { value: _vm.tarea.nombre },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.tarea, "nombre", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.tarea.descripcion,
+                  expression: "tarea.descripcion"
+                }
+              ],
+              staticClass: "form-control mb-2",
+              attrs: { type: "text", placeholder: "Descripcion" },
+              domProps: { value: _vm.tarea.descripcion },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.tarea, "descripcion", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-warning", attrs: { type: "submit" } },
+              [_vm._v("Editar")]
+            )
+          ]
+        )
+      : _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.agregar($event)
+              }
+            }
+          },
+          [
+            _c("h3", [_vm._v("Agregar Tareas")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.tarea.nombre,
+                  expression: "tarea.nombre"
+                }
+              ],
+              staticClass: "form-control mb-2",
+              attrs: { type: "text", placeholder: "Nombre" },
+              domProps: { value: _vm.tarea.nombre },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.tarea, "nombre", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.tarea.descripcion,
+                  expression: "tarea.descripcion"
+                }
+              ],
+              staticClass: "form-control mb-2",
+              attrs: { type: "text", placeholder: "Descripcion" },
+              domProps: { value: _vm.tarea.descripcion },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.tarea, "descripcion", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v("Agregar")]
+            )
+          ]
+        ),
+    _vm._v(" "),
+    _c("hr", { staticClass: "mt-3" }),
+    _vm._v(" "),
+    _c("h3", [_vm._v("Listado de notas")]),
+    _vm._v(" "),
+    _c(
+      "ul",
+      { staticClass: "list-group my-2" },
+      _vm._l(_vm.tareas, function(item, index) {
+        return _c("li", { key: index, staticClass: "list-group-item" }, [
+          _c("span", { staticClass: "badge badge-primary float-right" }, [
+            _vm._v(_vm._s(item.updated_at))
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(item.nombre))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(item.descripcion))]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger btn-sm",
+              on: {
+                click: function($event) {
+                  return _vm.eliminarNota(item, index)
+                }
+              }
+            },
+            [_vm._v("Eliminar")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-warning btn-sm",
+              on: {
+                click: function($event) {
+                  return _vm.editarFormulario(item)
+                }
+              }
+            },
+            [_vm._v("Editar")]
+          )
+        ])
+      }),
+      0
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h3", [_vm._v("Agregar Tareas")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
