@@ -1828,7 +1828,7 @@ __webpack_require__.r(__webpack_exports__);
       nombre: item.nombre,
       descripcion: item.descripcion
     };
-    axios.update("/notas/".concat(item.id), params).then(function (res) {
+    axios.put("/notas/".concat(item.id), params).then(function (res) {
       var index = _this4.tareas.findIndex(function (notaBuscar) {
         return notaBuscar.id === res.data.id;
       });

@@ -93,7 +93,7 @@ export default {
       descripcion: item.descripcion
     };
 
-    axios.update(`/notas/${item.id}`, params).then(res => {
+    axios.put(`/notas/${item.id}`, params).then(res => {
       const index = this.tareas.findIndex(
         notaBuscar => notaBuscar.id === res.data.id
       );
